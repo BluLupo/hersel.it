@@ -1,0 +1,31 @@
+<!--Header-->
+{% include "header.html" %}
+<br>
+<div class="container">
+<form method="post" action="/login">
+
+<div class="mb-3">
+  <label for="exampleFormControlInput2" class="form-label">Username</label>
+  <input type="text" class="form-control" id="exampleFormControlInput2" name="username" placeholder="username" required>
+</div>
+
+    <div class="mb-3">
+  <label for="exampleFormControlInput3" class="form-label">Password</label>
+  <input type="password" class="form-control" id="exampleFormControlInput3" name="password" placeholder="password" required>
+</div>
+
+    <div class="d-grid gap-2">
+  <button class="btn btn-primary" type="submit">Login</button>
+
+</div>
+    <br />
+    {% if error %}
+<div class="alert alert-danger" role="alert">
+  {{error}}
+</div>
+{% endif %}
+</form>
+</div>
+
+
+{% include "footer.html" %}
