@@ -11,9 +11,9 @@ from routes.login import route_login
 from routes.register import route_register
 from routes.dashboard import route_dashboard
 from routes.logout import route_logout
+from routes.blog import route_blog
 from config import Config
 from database.connection import Database
-from database.models.website_options import Website
 
 app = Flask(__name__,template_folder="templates",static_folder="static",static_url_path='/static')
 # Imposta la data di scadenza della sessione a 30 minuti
@@ -45,9 +45,10 @@ def favicon():
 ### ROUTES ###
 ##############
 app.register_blueprint(route_home)
+app.register_blueprint(route_dashboard)
+app.register_blueprint(route_blog)
 app.register_blueprint(route_login)
 app.register_blueprint(route_register)
-app.register_blueprint(route_dashboard)
 app.register_blueprint(route_logout)
 
 if __name__ == '__main__':

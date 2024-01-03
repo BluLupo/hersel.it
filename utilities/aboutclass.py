@@ -4,7 +4,7 @@ class BluLupo:
         self.name = 'Hersel Giannella'
         self.position = 'Analyst & System Integrator & PythonDev'
         self.web = 'https://hersel.it'
-        self.blog = 'https://blog.hersel.it'
+        self.blog = 'https://hersel.it/blog'
         self.linkedin = 'https://linkedin.com/in/hersel-giannella-654580111'
         self.code = {
             'backend': ['Python', 'Flask', 'Django', 'FastAPI', 'PHP'],
