@@ -11,3 +11,4 @@ class Website(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     enable_register = Column(Boolean, nullable=False, default=False)
     enable_login = Column(Boolean, nullable=False, default=False)
+

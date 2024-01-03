@@ -14,6 +14,7 @@ from routes.logout import route_logout
 from routes.blog import route_blog
 from config import Config
 from database.connection import Database
+from database.methods.website import create_data_website_options
 
 app = Flask(__name__,template_folder="templates",static_folder="static",static_url_path='/static')
 # Imposta la data di scadenza della sessione a 30 minuti
@@ -53,6 +54,7 @@ app.register_blueprint(route_logout)
 
 if __name__ == '__main__':
     db = Database()
-    db.create_tables()
+    db.create_tables_and_data()
+    create_data_website_options()
     app.secret_key = Config.APP_SECRET
     app.run(debug=Config.APP_DEBUG,host=Config.APP_HOST,port=Config.APP_PORT)

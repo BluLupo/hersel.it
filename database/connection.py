@@ -24,6 +24,6 @@ class Database:
         self.engine = engine
         self.Session = Session
 
-    def create_tables(self):
+    def create_tables_and_data(self):
         # Crea tutte le tabelle
         Base.metadata.create_all(bind=self.engine)

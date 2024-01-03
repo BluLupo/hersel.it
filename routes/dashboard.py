@@ -3,7 +3,7 @@
 
 # Copyright Hersel Giannella
 
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, request
 from database.methods.user import get_user_by_username
 from database.methods.website import get_options
 from decorators.login_required import login_required
@@ -18,4 +18,6 @@ def dashboard():
     options = get_options()[0]
     print(options['enable_login'])
     print(result_username)
+    if request.method == 'POST':
+        print("POST")
     return render_template('/dashboard/dashboard.html',user=result_username)
