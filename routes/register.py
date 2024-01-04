@@ -14,9 +14,7 @@ route_register = Blueprint('route_register', __name__)
 def register():
     error = None
     options = get_options()[0]
-    print(options)
     enable_reg = options['enable_register']
-    print(enable_reg)
 
     if enable_reg == True:
         if request.method == 'POST':
