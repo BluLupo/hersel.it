@@ -3,7 +3,7 @@
 
 # Copyright Hersel Giannella
 
-from flask import Blueprint, render_template, session, request
+from flask import Blueprint, render_template, session, request, url_for, redirect
 from database.methods.user import get_user_by_username
 from database.methods.website import get_options,update_options
 from decorators.login_required import login_required
@@ -26,5 +26,6 @@ def dashboard():
         #Update Options into Database
         update_options(enable_register=enable_register)
         update_options(enable_login=enable_login)
+        return redirect(url_for('route_dashboard.dashboard'))
 
     return render_template('/dashboard/dashboard.html',user=result_username,options=options)
