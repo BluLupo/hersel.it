@@ -54,3 +54,4 @@ def update_options(enable_login=None, enable_register=None):
         print("Opzioni del sito aggiornate correttamente.")
     else:
         print("Sito non trovato.")
+
