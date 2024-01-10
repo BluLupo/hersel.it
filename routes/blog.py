@@ -25,6 +25,5 @@ def blog():
     pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
     # Estrai gli articoli per la pagina corrente
     articles_for_page = articles_and_authors[offset: offset + per_page]
-    print(articles_for_page)
 
     return render_template('blog.html', articles=articles_for_page, pagination=pagination,me=me)
