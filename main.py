@@ -12,6 +12,7 @@ from routes.register import route_register
 from routes.dashboard import route_dashboard
 from routes.logout import route_logout
 from routes.blog import route_blog
+from routes.article import route_article
 from config import Config
 from database.connection import Database
 from database.methods.website import create_data_website_options
@@ -48,6 +49,7 @@ def favicon():
 app.register_blueprint(route_home)
 app.register_blueprint(route_dashboard)
 app.register_blueprint(route_blog)
+app.register_blueprint(route_article)
 app.register_blueprint(route_login)
 app.register_blueprint(route_register)
 app.register_blueprint(route_logout)

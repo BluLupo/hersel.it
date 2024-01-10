@@ -1,0 +1,14 @@
+<!--Header-->
+{% include "header.html" %}
+<br />
+<div class="container">
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+          <p class="blog-post-meta">{{article['created_at']}}</p>
+        <h1 class="display-5 fw-bold">{{article['title']}}</h1>
+        <p class="col-md-8 fs-4">{{article['content']}}</p>
+      </div>
+    </div>
+</div>
+<!--Footer-->
+{% include "footer.html" %}

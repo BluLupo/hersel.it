@@ -27,7 +27,7 @@ def get_article_by_id(article_id):
 
 def get_articles_and_authors_raw():
     try:
-        query = text("SELECT * FROM articles art INNER JOIN users u ON art.author_id = u.id WHERE art.publish_status = 1")
+        query = text("SELECT art.id as articleid,art.title,art.content,art.created_at,art.updated_at,art.photo_article,art.publish_status,u.id as userid,u.username FROM articles art INNER JOIN users u ON art.author_id = u.id WHERE art.publish_status = 1")
         result = session.execute(query)
 
         # Utilizza il metodo keys() per ottenere i nomi delle colonne
