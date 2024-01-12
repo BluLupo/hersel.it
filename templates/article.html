@@ -1,16 +1,18 @@
 <!--Header-->
 {% include "header.html" %}
+{% include "navbar.html" %}
+
+
 <br />
 <div class="container">
     <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-        <div class="container-fluid py-5">
+        <div class="container-fluid py-5 animate__animated animate__fadeIn">
             <p class="blog-post-meta">{{article['created_at']}}</p>
             <h1 class="display-5 fw-bold">{{article['title']}}</h1>
 
-            <!-- Aggiungi l'immagine qui -->
-            <figure class="text-center">
-                <img src="{{ url_for('static', filename='img/' + article['photo_article']) }}" alt="{{article['photo_article']}}" class="img-fluid" style="max-width: 80%;">
-                <figcaption>{{article['photo_article']}}</figcaption>
+            <!-- Aggiungi l'immagine qui con slideInLeft animation -->
+            <figure class="float-start">
+                <img src="{{ url_for('static', filename='img/' + article['photo_article']) }}" alt="{{article['photo_article']}}" class="img-fluid" style="max-width: 60%;">
             </figure>
 
             <p class="col-md-8 fs-4">{{article['content']}}</p>
@@ -19,3 +21,5 @@
 </div>
 <!--Footer-->
 {% include "footer.html" %}
+
+
