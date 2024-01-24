@@ -1,0 +1,20 @@
+<!-- Card Opzioni del Sito -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Opzioni del sito</h6>
+  </div>
+  <div class="card-body">
+    <form action="dashboard" method="POST">
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customSwitch1" name="enable_register" {% if options.enable_register %}checked{% endif %}>
+        <label class="custom-control-label" for="customSwitch1">Abilita Registrazione</label>
+      </div>
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customSwitch2" name="enable_login" {% if options.enable_login %}checked{% endif %}>
+        <label class="custom-control-label" for="customSwitch2">Abilita Login</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Salva</button>
+    </form>
+  </div>
+</div>
+<!-- End Card Opzioni Sito -->
