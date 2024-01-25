@@ -20,7 +20,9 @@ def dashboard():
     if request.method == 'POST':
         enable_register = request.form.get('enable_register')
         enable_login = request.form.get('enable_login')
+        title_input = request.form.get('title')
         ckeditor_input = request.form.get('valore_editor')
+        print(title_input)
         print(ckeditor_input)
         # Convert Value into Boolean Value
         enable_register = enable_register == 'on' if enable_register else False
