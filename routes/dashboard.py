@@ -18,18 +18,27 @@ def dashboard():
     options = get_options()[0]
 
     if request.method == 'POST':
-        enable_register = request.form.get('enable_register')
-        enable_login = request.form.get('enable_login')
-        title_input = request.form.get('title')
-        ckeditor_input = request.form.get('valore_editor')
+        form = request.form
+        title_input = form.get('title')
+        ckeditor_input = form.get('valore_editor')
         print(title_input)
         print(ckeditor_input)
-        # Convert Value into Boolean Value
-        enable_register = enable_register == 'on' if enable_register else False
-        enable_login = enable_login == 'on' if enable_login else False
-        # Update Options into Database
-        update_options(enable_register=enable_register)
-        update_options(enable_login=enable_login)
+
+        # Verifica da quale form proviene la richiesta
+        if 'options_button_site' in form:
+            print("A")
+            enable_register = form.get('enable_register')
+            enable_login = form.get('enable_login')
+
+            # Convert Value into Boolean Value
+            enable_register = enable_register == 'on' if enable_register else False
+            enable_login = enable_login == 'on' if enable_login else False
+
+            # Update Options into Database
+            update_options(enable_register=enable_register)
+            update_options(enable_login=enable_login)
+
         return redirect(url_for('route_dashboard.dashboard'))
 
     return render_template('/dashboard/dashboard.html', user=result_username, options=options)
+
