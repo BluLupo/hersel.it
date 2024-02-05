@@ -7,7 +7,7 @@
         <div class="card mb-3 animate__animated animate__jackInTheBox">
             <div class="card-body shadow-lg">
                 <h5 class="card-title">{{ article['title'] }}</h5>
-                <p class="card-text">{{ article['content'][:250] }}...</p>
+                <p class="card-text">{{ article['content'][:50]|safe }}...</p>
                 <p class="card-author">Author: {{ article['username'] }}</p>
                 <a href="{{ url_for('route_article.view_article', article_id=article['articleid']) }}" class="btn btn-primary">Read More</a>
             </div>

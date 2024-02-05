@@ -7,6 +7,7 @@ from flask import Blueprint, render_template, session, request, url_for, redirec
 from database.methods.user import get_user_by_username
 from database.methods.website import get_options, update_options
 from decorators.login_required import login_required
+from database.methods.articles import create_article
 
 route_dashboard = Blueprint('route_dashboard', __name__)
 
@@ -23,6 +24,8 @@ def dashboard():
         ckeditor_input = form.get('valore_editor')
         print(title_input)
         print(ckeditor_input)
+        # Creare un nuovo articolo utilizzando la funzione create_article
+        create_article(title=title_input, content=ckeditor_input, author_id=result_username['id'],photo_article="default.jpg")
 
         # Verifica da quale form proviene la richiesta
         if 'options_button_site' in form:

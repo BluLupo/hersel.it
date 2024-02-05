@@ -39,3 +39,14 @@ def get_articles_and_authors_raw():
         return result_list
     finally:
         session.close()
+
+def create_article(title, content, author_id, photo_article):
+    try:
+        new_article = Article(title=title, content=content, author_id=author_id, photo_article=photo_article)
+        session.add(new_article)
+        session.commit()
+    except Exception as e:
+        print(f"Error creating article: {e}")
+        session.rollback()  # Rollback the transaction in case of an error
+    finally:
+        session.close()
