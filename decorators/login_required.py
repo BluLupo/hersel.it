@@ -4,7 +4,7 @@
 # Copyright Hersel Giannella
 
 from functools import wraps
-from flask import session, render_template, redirect, url_for
+from flask import session, redirect, url_for
 
 def login_required(f):
     @wraps(f)
@@ -12,7 +12,6 @@ def login_required(f):
         if 'username' in session:
             return f(*args, **kwargs)
         else:
-            #return render_template('login/login.html')
             return redirect(url_for('route_login.login'))
 
     return wrap

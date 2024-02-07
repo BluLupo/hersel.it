@@ -5,7 +5,7 @@
 
 import os
 from datetime import timedelta
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, render_template
 from routes.home import route_home
 from routes.login import route_login
 from routes.register import route_register
@@ -13,6 +13,7 @@ from routes.dashboard import route_dashboard
 from routes.logout import route_logout
 from routes.blog import route_blog
 from routes.article import route_article
+from routes.profile import route_profile
 from config import Config
 from database.connection import Database
 from database.methods.website import create_data_website_options
@@ -43,6 +44,10 @@ def static_from_root():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error.html',message=error), 404
+
 ##############
 ### ROUTES ###
 ##############
@@ -50,6 +55,7 @@ app.register_blueprint(route_home)
 app.register_blueprint(route_dashboard)
 app.register_blueprint(route_blog)
 app.register_blueprint(route_article)
+app.register_blueprint(route_profile)
 app.register_blueprint(route_login)
 app.register_blueprint(route_register)
 app.register_blueprint(route_logout)

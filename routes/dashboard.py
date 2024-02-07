@@ -7,17 +7,19 @@ from flask import Blueprint, render_template, session, request, url_for, redirec
 from database.methods.user import get_user_by_username
 from database.methods.website import get_options, update_options
 from decorators.login_required import login_required
+from decorators.only_admin import admin
 from database.methods.articles import create_article
 
 route_dashboard = Blueprint('route_dashboard', __name__)
 
 @route_dashboard.route('/dashboard', methods=['GET', 'POST'])
 @login_required
+@admin
 def dashboard():
     username = session['username']
     result_username = get_user_by_username(username)
     options = get_options()[0]
-
+    print(result_username)
     if request.method == 'POST':
         form = request.form
         title_input = form.get('title')
