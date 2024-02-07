@@ -10,5 +10,6 @@ route_logout = Blueprint('route_logout', __name__)
 @route_logout.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('username', None)
+    session.pop('userid', None)
     session['logged_user'] = False
     return redirect('/')

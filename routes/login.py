@@ -27,7 +27,8 @@ def login():
                 hash_and_salt = row['password'].encode('utf8')
                 if bcrypt.checkpw(password.encode('utf8'), hash_and_salt):
                     session['logged_user'] = True
-                    session['username'] = username
+                    session['username'] = row['username']
+                    session['userid'] = row['id']
                     return redirect(url_for('route_dashboard.dashboard'))
     else:
         return "LOGIN DISABILITATO"

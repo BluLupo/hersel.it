@@ -14,6 +14,7 @@ from routes.logout import route_logout
 from routes.blog import route_blog
 from routes.article import route_article
 from routes.profile import route_profile
+from routes.post_operations import route_changeusername
 from config import Config
 from database.connection import Database
 from database.methods.website import create_data_website_options
@@ -59,6 +60,7 @@ app.register_blueprint(route_profile)
 app.register_blueprint(route_login)
 app.register_blueprint(route_register)
 app.register_blueprint(route_logout)
+app.register_blueprint(route_changeusername)
 
 if __name__ == '__main__':
     db = Database()

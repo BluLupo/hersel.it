@@ -19,19 +19,18 @@ def dashboard():
     username = session['username']
     result_username = get_user_by_username(username)
     options = get_options()[0]
-    print(result_username)
+
     if request.method == 'POST':
         form = request.form
         title_input = form.get('title')
         ckeditor_input = form.get('valore_editor')
-        print(title_input)
-        print(ckeditor_input)
+
         # Creare un nuovo articolo utilizzando la funzione create_article
         create_article(title=title_input, content=ckeditor_input, author_id=result_username['id'],photo_article="default.jpg")
 
         # Verifica da quale form proviene la richiesta
         if 'options_button_site' in form:
-            print("A")
+
             enable_register = form.get('enable_register')
             enable_login = form.get('enable_login')
 

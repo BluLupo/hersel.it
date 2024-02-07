@@ -60,4 +60,17 @@ def get_user_by_username(username):
         session.close()
 
 
+def update_username(user_id, new_username):
+    try:
+        user = session.query(User).filter_by(id=user_id).first()
+        if user:
+            user.username = new_username
+            session.commit()
+    except Exception as e:
+        print(f"Error updating username: {e}")
+        session.rollback()
+    finally:
+        session.close()
+
+
 
