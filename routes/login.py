@@ -20,6 +20,7 @@ def login():
             username = request.form.get('username')
             password = request.form.get('password')
             row = get_user_by_username(username)
+            #TODO rifare il controllo di Login
             if username == '' or password == '':
                 error = "Inserisci Username o Password Mancanti!"
                 return render_template('login.html',error=error)
