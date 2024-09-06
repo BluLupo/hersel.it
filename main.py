@@ -54,7 +54,7 @@ def not_found(error):
 ##############
 app.register_blueprint(route_home)
 app.register_blueprint(route_dashboard)
-app.register_blueprint(route_blog)
+#app.register_blueprint(route_blog)
 app.register_blueprint(route_article)
 app.register_blueprint(route_profile)
 app.register_blueprint(route_login)
