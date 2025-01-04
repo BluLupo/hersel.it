@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python package
+name: Test Quart Application
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.10", "3.11"]
 
     steps:
     - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest httpx hypercorn
+        python -m pip install flake8 pytest httpx hypercorn pytest-asyncio
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Lint with flake8
@@ -38,7 +38,7 @@ jobs:
 
     - name: Start Hypercorn for tests
       run: |
-        nohup hypercorn -b 127.0.0.1:5000 app:app &
+        nohup hypercorn -b 127.0.0.1:8000 app:app &
         sleep 5
 
     - name: Test application with pytest
@@ -49,4 +49,5 @@ jobs:
       if: always()
       run: |
         pkill -f hypercorn
+
 
