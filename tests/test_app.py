@@ -11,12 +11,13 @@ BASE_URL = "http://127.0.0.1:5000"
 @pytest.mark.asyncio
 async def test_home_route():
     """
-    Testa la route principale del Blueprint `route_home`.
+    Testa la rotta principale del Blueprint `route_home` che rende il template `index.html`.
     """
     async with httpx.AsyncClient(base_url=BASE_URL) as client:
         response = await client.get("/")
         assert response.status_code == 200
-        assert "Welcome" in response.text
+        # Verifica che il contenuto restituito contenga il testo che ci aspettiamo dal template
+        assert "<title>Hersel Giannella - PortFolio</title>" in response.text
 
 @pytest.mark.asyncio
 async def test_404_route():
