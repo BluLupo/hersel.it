@@ -1,17 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 {% include "head.html" %}
-<body>
-  <div class="black-hole-container">
-    <div class="black-hole"></div>
-    <div class="content">
-      <h1 id="name">Hersel Giannella</h1>
-      <p id="subtitle">Analista Programmatore / Linux SysAdmin</p>
-      {% include "content/skills.html" %}
-      {% include "content/link.html" %}
+<body data-bs-spy="scroll" data-bs-target="#navbar">
+    <!-- Navbar -->
+  {% include "navbar.html" %}
 
-    </div>
-  </div>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    <h1 class="display-4 fw-bold mb-4">Sistemista/Sviluppatore Web</h1>
+                    <p class="lead mb-4">Trasformo infrastrutture complesse in soluzioni web innovative ed efficienti</p>
+                    <div class="d-flex gap-3">
+                        <a href="#links" class="btn btn-primary btn-lg">I Miei Profili</a>
+                        <a href="#projects" class="btn btn-outline-light btn-lg">Vedi Progetti</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-center animate__animated animate__fadeInRight">
+                    <div class="text-center">
+                        <img src="{{ url_for('static', filename='img/personal.png') }}" alt="Profile" class="img-fluid rounded-circle shadow" style="max-width: 350px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    {% include "content/about.html" %}
+    <!-- End About Section -->
+
+    <!-- Projects Section -->
+    {% include "content/project.html" %}
+    <!-- End Projects Section -->
+
+    <!-- Links Section -->
+    {% include "content/links.html" %}
+    <!-- End Link Section -->
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn btn-primary rounded-circle p-3">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap 5.3 JS Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
