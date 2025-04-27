@@ -58,23 +58,24 @@ Questa applicazione utilizza Quart come web framework asincrono e Hypercorn come
 ```yml
     version: "3.9"
 
-   services:
-     quartapp:
-       image: python:3.10-slim
-       container_name: herselquart
-       working_dir: /app
-       ports:
-         - "127.0.0.1:5000:5000"
-       command: >
-         sh -c "
-           apt-get update &&
-           apt-get install -y git &&
-           git clone https://github.com/BluLupo/hersel.it.git /app &&
-           pip install --no-cache-dir -r requirements.txt &&
-           hypercorn -c hypercorn_config.toml app:app
-         "
-       environment:
-         - PYTHONUNBUFFERED=1
+services:
+  quartapp:
+    image: python:3.10-slim
+    container_name: quartapp
+    working_dir: /app
+    ports:
+      - "127.0.0.1:5000:5000"
+    restart: always
+    command: >
+      sh -c "
+        apt-get update &&
+        apt-get install -y git &&
+        [ -d /app/.git ] || git clone https://github.com/BluLupo/hersel.it.git /app &&
+        pip install --no-cache-dir -r requirements.txt &&
+        hypercorn -c hypercorn_config.toml app:app
+      "
+    environment:
+      - PYTHONUNBUFFERED=1
    ```
 
 2 - Esegui il servizio con Docker Compose:
