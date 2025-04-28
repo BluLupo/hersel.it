@@ -5,7 +5,7 @@
                 <!-- Progetto 1 -->
                 <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp">
                     <div class="card project-card shadow-sm">
-                        <img src="/api/placeholder/400/250" class="card-img-top" alt="Progetto 1">
+                        <img src="{{ url_for('static', filename='img/bash.png')}}" class="card-img-top" alt="Progetto 1">
                         <div class="card-body">
                             <h5 class="card-title">Script di Backup Database (MariaDB/MySQL)</h5>
                             <p class="card-text">Script in Bash per sistemi Linux che permette l'automazione dei backup database</p>
@@ -23,7 +23,7 @@
                 <!-- Progetto 2 -->
                 <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
                     <div class="card project-card shadow-sm">
-                        <img src="/api/placeholder/400/250" class="card-img-top" alt="Progetto 2">
+                        <img src="{{ url_for('static', filename='img/byte.png')}}" class="card-img-top" alt="Progetto 2">
                         <div class="card-body">
                             <h5 class="card-title">Personal ByteStash</h5>
                             <p class="card-text">Ho realizzato un repository personale di snippet sfruttando Bytestash, ottimizzando la gestione del codice riutilizzabile e migliorando la produttività nello sviluppo di progetti software.</p>
@@ -45,7 +45,7 @@
                 <!-- Progetto 3 -->
                 <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
                     <div class="card project-card shadow-sm">
-                        <img src="/api/placeholder/400/250" class="card-img-top" alt="Nextcloud Personale">
+                        <img src="{{ url_for('static', filename='img/next.png')}}" class="card-img-top" alt="Nextcloud Personale">
                         <div class="card-body">
                             <h5 class="card-title">Nextcloud Personale</h5>
                             <p class="card-text">Installazione di Nextcloud su container LXC con database PostgreSQL e caching Redis, integrato in una rete privata con gestione IP tramite server DHCP.</p>

@@ -17,7 +17,7 @@ async def test_home_route():
         response = await client.get("/")
         assert response.status_code == 200
         # Verifica che il contenuto restituito contenga il testo che ci aspettiamo dal template
-        assert "<title>Hersel Giannella - PortFolio</title>" in response.text
+        assert "<title>Portfolio - Sistemista Windows/Linux e Sviluppatore Web</title>" in response.text
 
 @pytest.mark.asyncio
 async def test_404_route():
