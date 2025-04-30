@@ -1,7 +1,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Portfolio - Sistemista Windows/Linux e Sviluppatore Web</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Portfolio di Hersel, sistemista esperto Windows/Linux e sviluppatore web specializzato in Python, Flask, PHP e DevOps.">
+    <meta name="keywords" content="Hersel, sistemista, Linux, Windows, sviluppatore web, Python, Flask, PHP, DevOps, portfolio">
+    <meta name="author" content="Hersel">
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Portfolio - Sistemista Windows/Linux e Sviluppatore Web">
+    <meta property="og:description" content="Scopri i progetti e le competenze di Hersel nel mondo IT e dello sviluppo web.">
+    <meta property="og:url" content="https://hersel.it/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename='img/personal.png') }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portfolio - Sistemista Windows/Linux e Sviluppatore Web">
+    <meta name="twitter:description" content="Scopri i progetti e le competenze di Hersel nel mondo IT e dello sviluppo web.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/personal.png') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Animate.css -->
@@ -9,5 +32,4 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
 </head>

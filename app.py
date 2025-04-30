@@ -28,5 +28,6 @@ async def robots():
 
 # BluePrint Routes
 app.register_blueprint(route_home)
+
 if __name__ == '__main__':
     app.run(debug=config.DEBUG, host=config.APP_HOST, port=config.APP_PORT)
