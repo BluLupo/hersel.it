@@ -1,0 +1,8 @@
+User-agent: *
+
+Allow: /
+Disallow: /home
+Disallow: /home2
+Disallow: /immagini
+
+Sitemap: https://hersel.it/sitemap.xml
