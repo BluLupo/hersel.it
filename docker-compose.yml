@@ -1,20 +1,53 @@
-version: "3.9"
+version: '3.9'
 
 services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: hersel_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_change_me
+      MYSQL_DATABASE: hersel_portfolio
+      MYSQL_USER: hersel_user
+      MYSQL_PASSWORD: secure_password_123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Quart Application
   quartapp:
-    image: python:3.10-slim
-    container_name: quartapp
-    working_dir: /app
+    build: .
+    container_name: hersel_app
+    restart: always
     ports:
       - "127.0.0.1:5000:5000"
-    restart: always
-    command: >
-      sh -c "
-        apt-get update &&
-        apt-get install -y git &&
-        [ -d /app/.git ] || git clone https://github.com/BluLupo/hersel.it.git /app &&
-        pip install --no-cache-dir -r requirements.txt &&
-        hypercorn -c hypercorn_config.toml app:app
-      "
     environment:
+      - DEBUG=False
+      - SECRET_KEY=super-secret-key-change-in-production-please
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=hersel_user
+      - DB_PASSWORD=secure_password_123
+      - DB_NAME=hersel_portfolio
       - PYTHONUNBUFFERED=1
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./static/uploads:/app/static/uploads
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  default:
+    name: hersel_network

@@ -1,0 +1,159 @@
+{% extends "dashboard/base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="mb-4">
+            <h3>Benvenuto, {{ user.full_name }}!</h3>
+            <p class="text-muted">Ecco una panoramica del tuo portfolio</p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ stats.total_projects }}</h4>
+                        <p class="mb-0">Progetti Totali</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-folder fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ stats.published_projects }}</h4>
+                        <p class="mb-0">Pubblicati</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-check-circle fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ stats.featured_projects }}</h4>
+                        <p class="mb-0">In Evidenza</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-star fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ stats.total_users }}</h4>
+                        <p class="mb-0">Utenti</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-people fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Projects -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Progetti Recenti</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_projects %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Titolo</th>
+                                    <th>Stato</th>
+                                    <th>Creato</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in recent_projects %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ project.title }}</strong>
+                                        {% if project.is_featured %}
+                                            <span class="badge bg-warning ms-1">Featured</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if project.is_published %}
+                                            <span class="badge bg-success">Pubblicato</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Bozza</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ project.created_at.strftime('%d/%m/%Y') if project.created_at else 'N/D' }}</td>
+                                    <td>
+                                        <a href="{{ url_for('dashboard.edit_project', project_id=project.id) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Nessun progetto ancora creato.</p>
+                    <a href="{{ url_for('dashboard.new_project') }}" class="btn btn-primary">
+                        <i class="bi bi-plus"></i> Crea il primo progetto
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Azioni Rapide</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('dashboard.new_project') }}" class="btn btn-primary">
+                        <i class="bi bi-plus"></i> Nuovo Progetto
+                    </a>
+                    <a href="{{ url_for('dashboard.projects') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-folder"></i> Gestisci Progetti
+                    </a>
+                    <a href="{{ url_for('home.index') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-eye"></i> Visualizza Sito
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
