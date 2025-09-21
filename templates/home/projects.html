@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Progetti - Hersel.it{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">I Miei Progetti</h1>
+        <p class="lead text-muted">Una raccolta dei lavori che ho realizzato</p>
+    </div>
+    
+    {% if projects %}
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm">
+                    {% if project.image_url %}
+                        <img src="{{ project.image_url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="bi bi-folder display-4 text-muted"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-auto">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text text-muted">{{ project.description[:150] }}{% if project.description|length > 150 %}...{% endif %}</p>
+                            
+                            {% if project.technologies %}
+                                <div class="mb-3">
+                                    {% for tech in project.technologies[:4] %}
+                                        <span class="badge bg-secondary me-1 mb-1">{{ tech }}</span>
+                                    {% endfor %}
+                                    {% if project.technologies|length > 4 %}
+                                        <span class="badge bg-light text-dark">+{{ project.technologies|length - 4 }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="btn-group">
+                                <a href="{{ url_for('home.project_detail', slug=project.slug) }}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-eye"></i> Dettagli
+                                </a>
+                                {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-github"></i> Codice
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if project.demo_url %}
+                                <a href="{{ project.demo_url }}" target="_blank" class="btn btn-sm btn-success">
+                                    <i class="bi bi-box-arrow-up-right"></i> Demo Live
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-folder2-open display-1 text-muted"></i>
+            <h4 class="mt-3">Nessun progetto disponibile</h4>
+            <p class="text-muted">Sto lavorando su alcuni progetti interessanti!</p>
+            <a href="{{ url_for('home.index') }}" class="btn btn-primary">
+                <i class="bi bi-arrow-left"></i> Torna alla Home
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

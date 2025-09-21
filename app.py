@@ -5,14 +5,14 @@
 # Enhanced Quart Application with Database and Authentication
 
 import asyncio
-from quart import Quart, send_from_directory, session, g
+from quart import Quart, send_from_directory, session, g, render_template
 from config import config
 from models.database import init_database, db_manager
 from utils.helpers import get_flash_messages
 from utils.auth import get_current_user
 
 # Import Blueprints
-from routes.home import route_home
+from routes.home import home_bp
 from routes.auth import auth_bp
 from routes.dashboard import dashboard_bp
 
@@ -54,7 +54,7 @@ async def robots():
     return await send_from_directory(app.static_folder, 'robots.txt')
 
 # Register Blueprints
-app.register_blueprint(route_home)
+app.register_blueprint(home_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(dashboard_bp)
 

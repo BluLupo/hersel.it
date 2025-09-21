@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site_name }} - {{ site_description }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold">Ciao, sono Hersel Giannella</h1>
+                <p class="lead mb-4">{{ site_description }}</p>
+                <div class="d-flex gap-3">
+                    <a href="#progetti" class="btn btn-light btn-lg">
+                        <i class="bi bi-folder"></i> I Miei Progetti
+                    </a>
+                    <a href="{{ url_for('home.contact') }}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-envelope"></i> Contattami
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="bg-white bg-opacity-10 rounded-circle p-4 d-inline-block">
+                    <i class="bi bi-code-slash display-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section id="progetti" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Progetti in Evidenza</h2>
+            <p class="text-muted">Alcuni dei miei lavori più interessanti</p>
+        </div>
+        
+        {% if featured_projects %}
+            <div class="row g-4">
+                {% for project in featured_projects %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm hover-card">
+                        {% if project.image_url %}
+                            <img src="{{ project.image_url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-folder display-4 text-muted"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text text-muted">{{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}</p>
+                            
+                            {% if project.technologies %}
+                                <div class="mb-3">
+                                    {% for tech in project.technologies[:3] %}
+                                        <span class="badge bg-secondary me-1">{{ tech }}</span>
+                                    {% endfor %}
+                                    {% if project.technologies|length > 3 %}
+                                        <span class="badge bg-light text-dark">+{{ project.technologies|length - 3 }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{{ url_for('home.project_detail', slug=project.slug) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i> Dettagli
+                                    </a>
+                                    {% if project.github_url %}
+                                        <a href="{{ project.github_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-github"></i> GitHub
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                {% if project.demo_url %}
+                                    <a href="{{ project.demo_url }}" target="_blank" class="btn btn-sm btn-success">
+                                        <i class="bi bi-box-arrow-up-right"></i> Demo
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="{{ url_for('home.projects') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-folder"></i> Vedi Tutti i Progetti
+                </a>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-folder2-open display-1 text-muted"></i>
+                <h4 class="mt-3">Progetti in arrivo</h4>
+                <p class="text-muted">Sto lavorando su alcuni progetti interessanti!</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Le Mie Competenze</h2>
+            <p class="text-muted">Tecnologie e strumenti che utilizzo</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-code-slash fs-1 text-primary"></i>
+                    </div>
+                    <h5>Backend Development</h5>
+                    <p class="text-muted">Python, Quart, Flask, FastAPI</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-success bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-palette fs-1 text-success"></i>
+                    </div>
+                    <h5>Frontend Development</h5>
+                    <p class="text-muted">HTML, CSS, JavaScript, Bootstrap</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-warning bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-database fs-1 text-warning"></i>
+                    </div>
+                    <h5>Database</h5>
+                    <p class="text-muted">MySQL, PostgreSQL, MongoDB</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-info bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-tools fs-1 text-info"></i>
+                    </div>
+                    <h5>DevOps & Tools</h5>
+                    <p class="text-muted">Docker, Git, Linux, CI/CD</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contatti" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Parliamo del Tuo Progetto</h2>
+            <p class="text-muted">Sono sempre interessato a nuove opportunità e collaborazioni</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    <div class="col-md-4 text-center">
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                            <i class="bi bi-envelope fs-2 text-primary"></i>
+                        </div>
+                        <h6>Email</h6>
+                        <a href="mailto:info@hersel.it" class="text-decoration-none">info@hersel.it</a>
+                    </div>
+                    
+                    <div class="col-md-4 text-center">
+                        <div class="bg-dark rounded-circle p-3 d-inline-block mb-3">
+                            <i class="bi bi-github fs-2 text-white"></i>
+                        </div>
+                        <h6>GitHub</h6>
+                        <a href="https://github.com/BluLupo" target="_blank" class="text-decoration-none">BluLupo</a>
+                    </div>
+                    
+                    <div class="col-md-4 text-center">
+                        <div class="bg-info bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                            <i class="bi bi-linkedin fs-2 text-info"></i>
+                        </div>
+                        <h6>LinkedIn</h6>
+                        <a href="#" target="_blank" class="text-decoration-none">Hersel Giannella</a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <a href="{{ url_for('home.contact') }}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-chat-dots"></i> Inizia una Conversazione
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.hover-card {
+    transition: transform 0.2s;
+}
+.hover-card:hover {
+    transform: translateY(-5px);
+}
+</style>
+{% endblock %}
