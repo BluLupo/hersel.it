@@ -2,68 +2,95 @@
         <div class="container">
             <h2 class="text-center section-title animate__animated animate__fadeIn">I Miei Progetti</h2>
             <div class="row">
-                <!-- Progetto 1 -->
-                <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp">
-                    <div class="card project-card shadow-sm">
-                        <img src="{{ url_for('static', filename='img/bash.webp')}}" class="card-img-top" alt="Progetto 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Script di Backup Database (MariaDB/MySQL)</h5>
-                            <p class="card-text">Script in Bash per sistemi Linux che permette l'automazione dei backup database</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="badge bg-primary me-1">Bash</span>
-                                    <span class="badge bg-info me-1">Linux</span>
+                {% if projects %}
+                    {% for project in projects %}
+                    <!-- {{ project.title }} -->
+                    <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" {% if project.animation_delay != '0s' %}style="animation-delay: {{ project.animation_delay }}"{% endif %}>
+                        <div class="card project-card shadow-sm">
+                            {% if project.image_url %}
+                            <img src="{{ url_for('static', filename=project.image_url) }}" class="card-img-top" alt="{{ project.title }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ project.title }}</h5>
+                                <p class="card-text">{{ project.description }}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        {% for tag in project.tags|sort(attribute='display_order') %}
+                                        <span class="badge {{ tag.color_class }} me-1">{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% if project.github_url or project.demo_url %}
+                                    <a href="{{ project.demo_url if project.demo_url else project.github_url }}" class="btn btn-sm btn-outline-primary">Dettagli</a>
+                                    {% endif %}
                                 </div>
-                                <a href="https://github.com/BluLupo/server-script/tree/main/db_bash_backup-main" class="btn btn-sm btn-outline-primary">Dettagli</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Progetto 1 -->
+                    <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp">
+                        <div class="card project-card shadow-sm">
+                            <img src="{{ url_for('static', filename='img/bash.webp')}}" class="card-img-top" alt="Progetto 1">
+                            <div class="card-body">
+                                <h5 class="card-title">Script di Backup Database (MariaDB/MySQL)</h5>
+                                <p class="card-text">Script in Bash per sistemi Linux che permette l'automazione dei backup database</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        <span class="badge bg-primary me-1">Bash</span>
+                                        <span class="badge bg-info me-1">Linux</span>
+                                    </div>
+                                    <a href="https://github.com/BluLupo/server-script/tree/main/db_bash_backup-main" class="btn btn-sm btn-outline-primary">Dettagli</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- Progetto 2 -->
-                <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-                    <div class="card project-card shadow-sm">
-                        <img src="{{ url_for('static', filename='img/byte.webp')}}" class="card-img-top" alt="Progetto 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Personal ByteStash</h5>
-                            <p class="card-text">Ho realizzato un repository personale di snippet sfruttando Bytestash, ottimizzando la gestione del codice riutilizzabile e migliorando la produttività nello sviluppo di progetti software.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="badge bg-warning text-dark me-1">LXC</span>
-                                    <span class="badge bg-dark me-1">Proxmox</span>
-                                    <span class="badge bg-info me-1">Nginx</span>
-                                    <span class="badge bg-secondary me-1">Reverse Proxy</span>
-                                    <span class="badge bg-primary me-1">Linux</span>
-                                    <span class="badge bg-primary me-1">Self-hosted</span>
+                    <!-- Progetto 2 -->
+                    <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                        <div class="card project-card shadow-sm">
+                            <img src="{{ url_for('static', filename='img/byte.webp')}}" class="card-img-top" alt="Progetto 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Personal ByteStash</h5>
+                                <p class="card-text">Ho realizzato un repository personale di snippet sfruttando Bytestash, ottimizzando la gestione del codice riutilizzabile e migliorando la produttività nello sviluppo di progetti software.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        <span class="badge bg-warning text-dark me-1">LXC</span>
+                                        <span class="badge bg-dark me-1">Proxmox</span>
+                                        <span class="badge bg-info me-1">Nginx</span>
+                                        <span class="badge bg-secondary me-1">Reverse Proxy</span>
+                                        <span class="badge bg-primary me-1">Linux</span>
+                                        <span class="badge bg-primary me-1">Self-hosted</span>
+                                    </div>
+                                    <a href="https://bytestash.gwserver.it/public/snippets" class="btn btn-sm btn-outline-primary">Dettagli</a>
                                 </div>
-                                <a href="https://bytestash.gwserver.it/public/snippets" class="btn btn-sm btn-outline-primary">Dettagli</a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Progetto 3 -->
-                <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
-                    <div class="card project-card shadow-sm">
-                        <img src="{{ url_for('static', filename='img/next.webp')}}" class="card-img-top" alt="Nextcloud Personale">
-                        <div class="card-body">
-                            <h5 class="card-title">Nextcloud Personale</h5>
-                            <p class="card-text">Installazione di Nextcloud su container LXC con database PostgreSQL e caching Redis, integrato in una rete privata con gestione IP tramite server DHCP.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="badge bg-primary me-1">Nextcloud</span>
-                                    <span class="badge bg-secondary me-1">PostgreSQL</span>
-                                    <span class="badge bg-info me-1">Redis</span>
-                                    <span class="badge bg-warning text-dark me-1">LXC</span>
-                                    <span class="badge bg-dark me-1">Proxmox</span>
-                                    <span class="badge bg-success me-1">Rete Privata</span>
-                                    <span class="badge bg-secondary me-1">DHCP Server</span>
+                    <!-- Progetto 3 -->
+                    <div class="col-lg-4 col-md-6 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                        <div class="card project-card shadow-sm">
+                            <img src="{{ url_for('static', filename='img/next.webp')}}" class="card-img-top" alt="Nextcloud Personale">
+                            <div class="card-body">
+                                <h5 class="card-title">Nextcloud Personale</h5>
+                                <p class="card-text">Installazione di Nextcloud su container LXC con database PostgreSQL e caching Redis, integrato in una rete privata con gestione IP tramite server DHCP.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        <span class="badge bg-primary me-1">Nextcloud</span>
+                                        <span class="badge bg-secondary me-1">PostgreSQL</span>
+                                        <span class="badge bg-info me-1">Redis</span>
+                                        <span class="badge bg-warning text-dark me-1">LXC</span>
+                                        <span class="badge bg-dark me-1">Proxmox</span>
+                                        <span class="badge bg-success me-1">Rete Privata</span>
+                                        <span class="badge bg-secondary me-1">DHCP Server</span>
+                                    </div>
+                                    <a href="https://cloud.gwserver.it" class="btn btn-sm btn-outline-primary">Dettagli</a>
                                 </div>
-                                <a href="https://cloud.gwserver.it" class="btn btn-sm btn-outline-primary">Dettagli</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
 
 <!--
 

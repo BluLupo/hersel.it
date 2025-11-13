@@ -3,52 +3,77 @@
             <h2 class="text-center section-title animate__animated animate__fadeIn">Chi Sono</h2>
             <div class="row align-items-center">
                 <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    {% if profile %}
+                    <h3 class="mb-4">{{ profile.title }}</h3>
+                    <p class="lead">{{ profile.lead_text }}</p>
+                    {% if profile.description_1 %}
+                    <p>{{ profile.description_1 }}</p>
+                    {% endif %}
+                    {% if profile.description_2 %}
+                    <p>{{ profile.description_2 }}</p>
+                    {% endif %}
+                    <div class="mt-4">
+                        {% if profile.cv_url %}
+                        <a href="{{ profile.cv_url }}" class="btn btn-primary me-2">Scarica CV</a>
+                        {% endif %}
+                        <a href="#links" class="btn btn-outline-secondary">I Miei Profili</a>
+                    </div>
+                    {% else %}
                     <h3 class="mb-4">Il ponte tra sistemi e sviluppo web</h3>
                     <p class="lead">Con oltre 7 Anni di esperienza nello sviluppo di applicazioni web con Python Flask, offro soluzioni complete end-to-end.</p>
                     <p>La mia doppia specializzazione mi permette di comprendere a fondo l'intero ciclo di vita delle applicazioni, dall'architettura del server fino all'implementazione e al deployment.</p>
                     <p>Mi piace risolvere problemi complessi e creare soluzioni che siano robuste, scalabili e facili da mantenere.</p>
                     <div class="mt-4">
-                        <!--<a href="#" class="btn btn-primary me-2">Scarica CV</a>-->
                         <a href="#links" class="btn btn-outline-secondary">I Miei Profili</a>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-6 animate__animated animate__fadeInRight">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
                             <h4 class="mb-4 text-primary">Tecnologie che utilizzo</h4>
                             <div class="d-flex flex-wrap justify-content-center">
-                                <div class="text-center m-3">
-                                    <i class="fab fa-linux tech-icon"></i>
-                                    <p>Linux</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fab fa-windows tech-icon"></i>
-                                    <p>Windows</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fab fa-python tech-icon"></i>
-                                    <p>Python</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fas fa-flask tech-icon"></i>
-                                    <p>Flask</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fas fa-database tech-icon"></i>
-                                    <p>Database</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fab fa-docker tech-icon"></i>
-                                    <p>Docker</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fas fa-server tech-icon"></i>
-                                    <p>Server</p>
-                                </div>
-                                <div class="text-center m-3">
-                                    <i class="fas fa-network-wired tech-icon"></i>
-                                    <p>Networking</p>
-                                </div>
+                                {% if skills %}
+                                    {% for skill in skills %}
+                                    <div class="text-center m-3">
+                                        <i class="{{ skill.icon_class }} tech-icon"></i>
+                                        <p>{{ skill.name }}</p>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="text-center m-3">
+                                        <i class="fab fa-linux tech-icon"></i>
+                                        <p>Linux</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fab fa-windows tech-icon"></i>
+                                        <p>Windows</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fab fa-python tech-icon"></i>
+                                        <p>Python</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fas fa-flask tech-icon"></i>
+                                        <p>Flask</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fas fa-database tech-icon"></i>
+                                        <p>Database</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fab fa-docker tech-icon"></i>
+                                        <p>Docker</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fas fa-server tech-icon"></i>
+                                        <p>Server</p>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <i class="fas fa-network-wired tech-icon"></i>
+                                        <p>Networking</p>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
