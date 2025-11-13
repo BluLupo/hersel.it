@@ -4,10 +4,13 @@
 # Copyright Hersel Giannella
 
 from flask import Flask, send_from_directory
+from flask_login import LoginManager
 from config import config
-from models import db
+from models import db, bcrypt, User
 from routes.home import route_home
 from routes.api import route_api
+from routes.auth import route_auth
+from routes.admin import route_admin
 
 app = Flask(
     __name__,
@@ -21,8 +24,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 app.config['SQLALCHEMY_ECHO'] = config.SQLALCHEMY_ECHO
 
-# Initialize database
+# Initialize extensions
 db.init_app(app)
+bcrypt.init_app(app)
+
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'auth.login'
+login_manager.login_message = 'Per accedere a questa pagina devi effettuare il login.'
+login_manager.login_message_category = 'warning'
+
+@login_manager.user_loader
+def load_user(user_id):
+    """Load user for Flask-Login"""
+    return User.query.get(int(user_id))
 
 # favicon.ico, sitemap.xml and robots.txt
 @app.route('/favicon.ico')
@@ -40,6 +56,8 @@ def robots():
 # BluePrint Routes
 app.register_blueprint(route_home)
 app.register_blueprint(route_api)
+app.register_blueprint(route_auth)
+app.register_blueprint(route_admin)
 
 if __name__ == '__main__':
     app.run(debug=config.DEBUG, host=config.APP_HOST, port=config.APP_PORT)

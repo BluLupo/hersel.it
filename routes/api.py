@@ -6,9 +6,11 @@
 """
 API Routes for managing portfolio data dynamically
 Provides REST endpoints for CRUD operations on Profile, Skills, Projects, and Social Links
+All write operations (POST, PUT, DELETE) require authentication
 """
 
 from flask import Blueprint, jsonify, request
+from flask_login import login_required
 from models import db, Profile, Skill, Project, ProjectTag, SocialLink
 
 route_api = Blueprint('api', __name__, url_prefix='/api')
@@ -28,6 +30,7 @@ def get_profile():
 
 
 @route_api.route('/profile', methods=['PUT'])
+@login_required
 def update_profile():
     """Update profile information"""
     profile = Profile.query.first()
@@ -58,6 +61,7 @@ def get_skills():
 
 
 @route_api.route('/skills', methods=['POST'])
+@login_required
 def create_skill():
     """Create a new skill"""
     data = request.json
@@ -75,6 +79,7 @@ def create_skill():
 
 
 @route_api.route('/skills/<int:skill_id>', methods=['PUT'])
+@login_required
 def update_skill(skill_id):
     """Update a skill"""
     skill = Skill.query.get_or_404(skill_id)
@@ -92,6 +97,7 @@ def update_skill(skill_id):
 
 
 @route_api.route('/skills/<int:skill_id>', methods=['DELETE'])
+@login_required
 def delete_skill(skill_id):
     """Delete a skill"""
     skill = Skill.query.get_or_404(skill_id)
@@ -112,6 +118,7 @@ def get_projects():
 
 
 @route_api.route('/projects', methods=['POST'])
+@login_required
 def create_project():
     """Create a new project"""
     data = request.json
@@ -144,6 +151,7 @@ def create_project():
 
 
 @route_api.route('/projects/<int:project_id>', methods=['PUT'])
+@login_required
 def update_project(project_id):
     """Update a project"""
     project = Project.query.get_or_404(project_id)
@@ -177,6 +185,7 @@ def update_project(project_id):
 
 
 @route_api.route('/projects/<int:project_id>', methods=['DELETE'])
+@login_required
 def delete_project(project_id):
     """Delete a project"""
     project = Project.query.get_or_404(project_id)
@@ -197,6 +206,7 @@ def get_social_links():
 
 
 @route_api.route('/social-links', methods=['POST'])
+@login_required
 def create_social_link():
     """Create a new social link"""
     data = request.json
@@ -214,6 +224,7 @@ def create_social_link():
 
 
 @route_api.route('/social-links/<int:link_id>', methods=['PUT'])
+@login_required
 def update_social_link(link_id):
     """Update a social link"""
     link = SocialLink.query.get_or_404(link_id)
@@ -231,6 +242,7 @@ def update_social_link(link_id):
 
 
 @route_api.route('/social-links/<int:link_id>', methods=['DELETE'])
+@login_required
 def delete_social_link(link_id):
     """Delete a social link"""
     link = SocialLink.query.get_or_404(link_id)

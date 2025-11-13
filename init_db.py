@@ -1,9 +1,9 @@
 """
 Database initialization script
-Populates the database with initial portfolio data
+Populates the database with initial portfolio data and creates default admin user
 """
 from app import app
-from models import db, Profile, Skill, Project, ProjectTag, SocialLink
+from models import db, User, Profile, Skill, Project, ProjectTag, SocialLink
 
 
 def init_database():
@@ -15,6 +15,15 @@ def init_database():
 
         print("Creating all tables...")
         db.create_all()
+
+        # Create default admin user
+        print("Creating default admin user...")
+        admin = User(
+            username='admin',
+            email='admin@hersel.it'
+        )
+        admin.set_password('admin123')  # CHANGE THIS PASSWORD AFTER FIRST LOGIN!
+        db.session.add(admin)
 
         # Create profile information
         print("Adding profile information...")
@@ -169,11 +178,19 @@ def init_database():
         db.session.commit()
 
         print("\n✅ Database initialized successfully!")
+        print(f"   - Admin User: 1 record")
         print(f"   - Profile: 1 record")
         print(f"   - Skills: {len(skills_data)} records")
         print(f"   - Projects: 3 records")
         print(f"   - Project Tags: {len(project1_tags) + len(project2_tags) + len(project3_tags)} records")
         print(f"   - Social Links: {len(social_links_data)} records")
+        print("\n" + "="*60)
+        print("🔐 DEFAULT ADMIN CREDENTIALS")
+        print("="*60)
+        print(f"   Username: admin")
+        print(f"   Password: admin123")
+        print(f"   ⚠️  CHANGE THIS PASSWORD IMMEDIATELY AFTER FIRST LOGIN!")
+        print("="*60)
 
 
 if __name__ == '__main__':
