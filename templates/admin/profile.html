@@ -1,0 +1,77 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Gestione Profilo{% endblock %}
+{% block page_title %}Gestione Profilo{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('admin.profile_edit') }}" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Titolo</label>
+                <input type="text" class="form-control" id="title" name="title"
+                       value="{{ profile.title if profile else '' }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="lead_text" class="form-label">Testo Principale</label>
+                <textarea class="form-control" id="lead_text" name="lead_text" rows="3" required>{{ profile.lead_text if profile else '' }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="description_1" class="form-label">Descrizione 1</label>
+                <textarea class="form-control" id="description_1" name="description_1" rows="3">{{ profile.description_1 if profile else '' }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="description_2" class="form-label">Descrizione 2</label>
+                <textarea class="form-control" id="description_2" name="description_2" rows="3">{{ profile.description_2 if profile else '' }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="years_experience" class="form-label">Anni di Esperienza</label>
+                <input type="number" class="form-control" id="years_experience" name="years_experience"
+                       value="{{ profile.years_experience if profile else 0 }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="cv_url" class="form-label">URL CV (opzionale)</label>
+                <input type="url" class="form-control" id="cv_url" name="cv_url"
+                       value="{{ profile.cv_url if profile else '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Immagine di Profilo</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="profile_image_file" class="form-label text-muted small">Upload Immagine</label>
+                        <input type="file" class="form-control" id="profile_image_file" name="profile_image_file" accept="image/*">
+                        <small class="text-muted">Formati supportati: png, jpg, jpeg, gif, webp (max 16 MB)</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="profile_image" class="form-label text-muted small">Oppure inserisci URL manualmente</label>
+                        <input type="text" class="form-control" id="profile_image" name="profile_image"
+                               value="{{ profile.profile_image if profile else '' }}" placeholder="img/personal.webp">
+                        <small class="text-muted">Percorso relativo alla cartella static/</small>
+                    </div>
+                </div>
+                {% if profile and profile.profile_image %}
+                <div class="mt-2">
+                    <small class="text-muted">Immagine attuale:</small><br>
+                    <img src="{{ url_for('static', filename=profile.profile_image) }}" alt="Profile" class="img-thumbnail rounded-circle" style="max-width: 200px; max-height: 200px;">
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-gradient">
+                    <i class="fas fa-save me-2"></i>Salva Modifiche
+                </button>
+                <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-times me-2"></i>Annulla
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
