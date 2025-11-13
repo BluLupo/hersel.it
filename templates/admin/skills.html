@@ -19,8 +19,16 @@
             <div class="col-md-2">
                 <input type="text" class="form-control" name="category" placeholder="Categoria">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <input type="number" class="form-control" name="display_order" placeholder="Ordine" value="0">
+            </div>
+            <div class="col-md-1">
+                <div class="form-check mt-2">
+                    <input type="checkbox" class="form-check-input" name="is_active" id="is_active_new" checked>
+                    <label class="form-check-label" for="is_active_new">
+                        Attiva
+                    </label>
+                </div>
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-gradient w-100">
@@ -63,6 +71,9 @@
                             {% endif %}
                         </td>
                         <td>
+                            <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editModal{{ skill.id }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
                             <form method="POST" action="{{ url_for('admin.skill_delete', skill_id=skill.id) }}" class="d-inline">
                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Sicuro di voler eliminare?')">
                                     <i class="fas fa-trash"></i>
@@ -70,6 +81,48 @@
                             </form>
                         </td>
                     </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editModal{{ skill.id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Modifica Competenza</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <form method="POST" action="{{ url_for('admin.skill_edit', skill_id=skill.id) }}">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nome</label>
+                                            <input type="text" class="form-control" name="name" value="{{ skill.name }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Icona (Font Awesome class)</label>
+                                            <input type="text" class="form-control" name="icon_class" value="{{ skill.icon_class }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Categoria</label>
+                                            <input type="text" class="form-control" name="category" value="{{ skill.category or '' }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Ordine di Visualizzazione</label>
+                                            <input type="number" class="form-control" name="display_order" value="{{ skill.display_order }}">
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" name="is_active" id="is_active_{{ skill.id }}" {% if skill.is_active %}checked{% endif %}>
+                                            <label class="form-check-label" for="is_active_{{ skill.id }}">
+                                                Competenza Attiva
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                        <button type="submit" class="btn btn-gradient">Salva Modifiche</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
                 </tbody>
             </table>

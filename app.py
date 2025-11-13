@@ -24,6 +24,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 app.config['SQLALCHEMY_ECHO'] = config.SQLALCHEMY_ECHO
 
+# File upload configuration
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB max file size
+app.config['UPLOAD_FOLDER'] = 'static/img'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
 # Initialize extensions
 db.init_app(app)
 bcrypt.init_app(app)

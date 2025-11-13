@@ -7,11 +7,40 @@
 Admin dashboard routes for managing portfolio content
 """
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
 from models import db, Profile, Skill, Project, ProjectTag, SocialLink
+import os
 
 route_admin = Blueprint('admin', __name__, url_prefix='/admin')
+
+
+def allowed_file(filename):
+    """Check if file extension is allowed"""
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+
+def save_uploaded_file(file):
+    """Save uploaded file and return the relative path"""
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        # Add timestamp to avoid collisions
+        from datetime import datetime
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
+        filename = timestamp + filename
+
+        # Create upload folder if it doesn't exist
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        os.makedirs(upload_folder, exist_ok=True)
+
+        filepath = os.path.join(upload_folder, filename)
+        file.save(filepath)
+
+        # Return relative path from static folder
+        return f"img/{filename}"
+    return None
 
 
 @route_admin.route('/')
@@ -134,10 +163,22 @@ def projects_manage():
 def project_add():
     """Add new project"""
     if request.method == 'POST':
+        # Handle image upload
+        image_url = request.form.get('image_url')  # Manual URL input
+        if 'image_file' in request.files:
+            file = request.files['image_file']
+            if file.filename:  # Se è stato selezionato un file
+                uploaded_path = save_uploaded_file(file)
+                if uploaded_path:
+                    image_url = uploaded_path
+                else:
+                    flash('Formato immagine non valido. Usa: png, jpg, jpeg, gif, webp', 'danger')
+                    return redirect(url_for('admin.project_add'))
+
         project = Project(
             title=request.form.get('title'),
             description=request.form.get('description'),
-            image_url=request.form.get('image_url'),
+            image_url=image_url,
             demo_url=request.form.get('demo_url'),
             github_url=request.form.get('github_url'),
             display_order=int(request.form.get('display_order', 0)),
@@ -180,9 +221,21 @@ def project_edit(project_id):
     project = Project.query.get_or_404(project_id)
 
     if request.method == 'POST':
+        # Handle image upload
+        image_url = request.form.get('image_url', project.image_url)
+        if 'image_file' in request.files:
+            file = request.files['image_file']
+            if file.filename:  # Se è stato selezionato un file
+                uploaded_path = save_uploaded_file(file)
+                if uploaded_path:
+                    image_url = uploaded_path
+                else:
+                    flash('Formato immagine non valido. Usa: png, jpg, jpeg, gif, webp', 'danger')
+                    return redirect(url_for('admin.project_edit', project_id=project_id))
+
         project.title = request.form.get('title', project.title)
         project.description = request.form.get('description', project.description)
-        project.image_url = request.form.get('image_url', project.image_url)
+        project.image_url = image_url
         project.demo_url = request.form.get('demo_url', project.demo_url)
         project.github_url = request.form.get('github_url', project.github_url)
         project.display_order = int(request.form.get('display_order', project.display_order))
