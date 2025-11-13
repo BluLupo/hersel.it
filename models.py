@@ -53,6 +53,7 @@ class Profile(db.Model):
     description_2 = db.Column(db.Text)
     years_experience = db.Column(db.Integer, default=7)
     cv_url = db.Column(db.String(500))
+    profile_image = db.Column(db.String(500), default='img/personal.webp')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -64,7 +65,8 @@ class Profile(db.Model):
             'description_1': self.description_1,
             'description_2': self.description_2,
             'years_experience': self.years_experience,
-            'cv_url': self.cv_url
+            'cv_url': self.cv_url,
+            'profile_image': self.profile_image
         }
 
 

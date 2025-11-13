@@ -32,7 +32,8 @@ def init_database():
             lead_text="Con oltre 7 Anni di esperienza nello sviluppo di applicazioni web con Python Flask, offro soluzioni complete end-to-end.",
             description_1="La mia doppia specializzazione mi permette di comprendere a fondo l'intero ciclo di vita delle applicazioni, dall'architettura del server fino all'implementazione e al deployment.",
             description_2="Mi piace risolvere problemi complessi e creare soluzioni che siano robuste, scalabili e facili da mantenere.",
-            years_experience=7
+            years_experience=7,
+            profile_image='img/personal.webp'
         )
         db.session.add(profile)
 

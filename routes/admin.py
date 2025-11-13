@@ -78,12 +78,25 @@ def profile_edit():
         flash('Profilo non trovato.', 'danger')
         return redirect(url_for('admin.profile_manage'))
 
+    # Handle profile image upload
+    profile_image_url = request.form.get('profile_image', profile.profile_image)
+    if 'profile_image_file' in request.files:
+        file = request.files['profile_image_file']
+        if file.filename:
+            uploaded_path = save_uploaded_file(file)
+            if uploaded_path:
+                profile_image_url = uploaded_path
+            else:
+                flash('Formato immagine non valido. Usa: png, jpg, jpeg, gif, webp', 'danger')
+                return redirect(url_for('admin.profile_manage'))
+
     profile.title = request.form.get('title', profile.title)
     profile.lead_text = request.form.get('lead_text', profile.lead_text)
     profile.description_1 = request.form.get('description_1', profile.description_1)
     profile.description_2 = request.form.get('description_2', profile.description_2)
     profile.years_experience = int(request.form.get('years_experience', profile.years_experience))
     profile.cv_url = request.form.get('cv_url', profile.cv_url)
+    profile.profile_image = profile_image_url
 
     db.session.commit()
     flash('Profilo aggiornato con successo!', 'success')

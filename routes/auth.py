@@ -8,7 +8,7 @@ Authentication routes for login/logout
 """
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from models import User, db
 from datetime import datetime
 
@@ -60,3 +60,42 @@ def logout():
     logout_user()
     flash('Logout effettuato con successo.', 'info')
     return redirect(url_for('route_home.home'))
+
+
+@route_auth.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    """Change password page"""
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Validation
+        if not current_password or not new_password or not confirm_password:
+            flash('Tutti i campi sono obbligatori.', 'danger')
+            return render_template('auth/change_password.html')
+
+        # Check current password
+        if not current_user.check_password(current_password):
+            flash('La password attuale non è corretta.', 'danger')
+            return render_template('auth/change_password.html')
+
+        # Check if new passwords match
+        if new_password != confirm_password:
+            flash('Le nuove password non corrispondono.', 'danger')
+            return render_template('auth/change_password.html')
+
+        # Check password length
+        if len(new_password) < 6:
+            flash('La nuova password deve essere di almeno 6 caratteri.', 'danger')
+            return render_template('auth/change_password.html')
+
+        # Update password
+        current_user.set_password(new_password)
+        db.session.commit()
+
+        flash('Password modificata con successo!', 'success')
+        return redirect(url_for('admin.dashboard'))
+
+    return render_template('auth/change_password.html')

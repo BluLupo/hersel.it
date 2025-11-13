@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-lg-6 d-flex justify-content-center animate__animated animate__fadeInRight">
                     <div class="text-center">
-                        <img src="{{ url_for('static', filename='img/personal.webp') }}" alt="Profile" class="img-fluid rounded-circle shadow" style="max-width: 350px;">
+                        <img src="{{ url_for('static', filename=profile.profile_image if profile and profile.profile_image else 'img/personal.webp') }}" alt="Profile" class="img-fluid rounded-circle shadow" style="max-width: 350px;">
                     </div>
                 </div>
             </div>
